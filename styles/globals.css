@@ -1,26 +1,188 @@
-@import "tailwindcss";
+/* Import Font Pixel dari Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+/* ============================================
+   CUSTOM CSS VARIABLES
+   ============================================ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-retro-bg: #f0e8d0;
+  --color-retro-dark: #000000;
+  --color-retro-gray: #888888;
+  --color-retro-light: #aaaaaa;
+  --color-retro-hover: #cccccc;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ============================================
+   RESET & BASE STYLES
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html,
+body {
+  font-family: 'Silkscreen', monospace;
+  background-color: var(--color-retro-bg);
+  color: var(--color-retro-dark);
+  overflow-x: hidden;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
+  image-rendering: pixelated;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+#__next {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR RETRO
+   ============================================ */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-retro-bg);
+  border: 2px solid var(--color-retro-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-retro-dark);
+  border: 2px solid var(--color-retro-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-retro-gray);
+}
+
+/* ============================================
+   CUSTOM COMPONENTS (Tailwind @layer)
+   ============================================ */
+@layer components {
+  /* Button Retro Base */
+  .btn-retro {
+    @apply font-pixel-alt bg-retro-bg text-retro-dark;
+    @apply border-retro border-retro-dark;
+    @apply px-6 py-3 text-sm uppercase cursor-pointer;
+    @apply transition-all duration-100 ease-in-out;
+    @apply select-none;
+    border-radius: 0;
+  }
+
+  .btn-retro:hover {
+    @apply bg-retro-light;
+  }
+
+  .btn-retro:active,
+  .btn-retro.active {
+    @apply bg-retro-dark text-retro-bg;
+  }
+
+  .btn-retro:disabled {
+    @apply bg-retro-bg text-retro-gray border-retro-gray;
+    @apply cursor-not-allowed;
+  }
+
+  /* Container dengan border retro */
+  .box-retro {
+    @apply bg-retro-bg border-retro border-retro-dark p-4;
+    border-radius: 0;
+  }
+
+  /* Text utilities */
+  .text-pixel {
+    @apply font-pixel;
+  }
+
+  .text-pixel-alt {
+    @apply font-pixel-alt;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ============================================
+   ANIMATIONS RETRO
+   ============================================ */
+@layer utilities {
+  /* Blinking cursor untuk loading */
+  @keyframes blink {
+    0%, 50% { 
+      opacity: 1; 
+    }
+    51%, 100% { 
+      opacity: 0; 
+    }
+  }
+
+  .blink {
+    animation: blink 1s step-end infinite;
+  }
+
+  /* Fade in untuk page transitions */
+  @keyframes fadeIn {
+    from { 
+      opacity: 0; 
+    }
+    to { 
+      opacity: 1; 
+    }
+  }
+
+  .fade-in {
+    animation: fadeIn 0.3s ease-in;
+  }
+
+  /* Glitch effect */
+  @keyframes glitch {
+    0% { 
+      transform: translate(0); 
+    }
+    20% { 
+      transform: translate(-2px, 2px); 
+    }
+    40% { 
+      transform: translate(-2px, -2px); 
+    }
+    60% { 
+      transform: translate(2px, 2px); 
+    }
+    80% { 
+      transform: translate(2px, -2px); 
+    }
+    100% { 
+      transform: translate(0); 
+    }
+  }
+
+  .glitch {
+    animation: glitch 0.3s ease-in-out;
+  }
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (min-width: 768px) and (orientation: landscape) {
+  body {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 12px;
+  }
 }
